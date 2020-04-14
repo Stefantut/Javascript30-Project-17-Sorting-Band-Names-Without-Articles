@@ -65,7 +65,6 @@
     </div>
 
     <script>
-      const list = document.querySelector("#bands");
       const sortButtonAZ = document.querySelector(".sort-az");
       const sortButtonZA = document.querySelector(".sort-za");
       const randomButton = document.querySelector(".random");
@@ -84,32 +83,36 @@
         "Anywhere But Here",
         "An Old Dog",
       ];
+
+      const list = document.querySelector("#bands");
+
+      //Display on load of the page
       bands.forEach((band) => {
         list.innerHTML += `<li>${band}</li>`;
       });
+
+      // regex & trim to remove white spaces
       function strip(bandName) {
         return bandName.replace(/^(a |the |an )/i, "").trim();
       }
+      //Sort A-Z
       function sort() {
         const sortBands = bands.sort((a, b) => (strip(a) > strip(b) ? 1 : -1));
-        document.querySelector("#bands").innerHTML = sortBands
-          .map((band) => `<li>${band}</li>`)
-          .join("");
+        list.innerHTML = sortBands.map((band) => `<li>${band}</li>`).join("");
       }
-
+      //Sort Z-A
       function sortReverse() {
         const sortBands = bands.sort((a, b) => (strip(a) > strip(b) ? -1 : 1));
-        document.querySelector("#bands").innerHTML = sortBands
+        list.innerHTML = sortBands.map((band) => `<li>${band}</li>`).join("");
+      }
+      //Shuffle
+      function shuffleBands() {
+        const shuffledBands = bands.sort(() => Math.random() - 0.5);
+        list.innerHTML = shuffledBands
           .map((band) => `<li>${band}</li>`)
           .join("");
       }
 
-      function shuffleBands() {
-        const shuffledBands = bands.sort(() => Math.random() - 0.5);
-        document.querySelector("#bands").innerHTML = shuffledBands
-          .map((band) => `<li>${band}</li>`)
-          .join("");
-      }
       sortButtonAZ.addEventListener("click", sort);
       sortButtonZA.addEventListener("click", sortReverse);
       randomButton.addEventListener("click", shuffleBands);
