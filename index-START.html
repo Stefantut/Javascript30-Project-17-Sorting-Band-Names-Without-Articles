@@ -60,13 +60,15 @@
     <ul id="bands"></ul>
     <div class="buttons">
       <button class="button sort-az">Sort A-Z</button>
-      <button class="button sort-za">Sort A-Z</button>
+      <button class="button sort-za">Sort Z-A</button>
+      <button class="button random">Random Shuffle</button>
     </div>
 
     <script>
       const list = document.querySelector("#bands");
       const sortButtonAZ = document.querySelector(".sort-az");
       const sortButtonZA = document.querySelector(".sort-za");
+      const randomButton = document.querySelector(".random");
       const bands = [
         "The Plot in You",
         "The Devil Wears Prada",
@@ -88,22 +90,29 @@
       function strip(bandName) {
         return bandName.replace(/^(a |the |an )/i, "").trim();
       }
-
-      function sortAZ() {
+      function sort() {
         const sortBands = bands.sort((a, b) => (strip(a) > strip(b) ? 1 : -1));
         document.querySelector("#bands").innerHTML = sortBands
           .map((band) => `<li>${band}</li>`)
           .join("");
       }
-      function sortZA() {
+
+      function sortReverse() {
         const sortBands = bands.sort((a, b) => (strip(a) > strip(b) ? -1 : 1));
         document.querySelector("#bands").innerHTML = sortBands
           .map((band) => `<li>${band}</li>`)
           .join("");
       }
 
-      sortButtonAZ.addEventListener("click", sortAZ);
-      sortButtonZA.addEventListener("click", sortZA);
+      function shuffleBands() {
+        const shuffledBands = bands.sort(() => Math.random() - 0.5);
+        document.querySelector("#bands").innerHTML = shuffledBands
+          .map((band) => `<li>${band}</li>`)
+          .join("");
+      }
+      sortButtonAZ.addEventListener("click", sort);
+      sortButtonZA.addEventListener("click", sortReverse);
+      randomButton.addEventListener("click", shuffleBands);
     </script>
   </body>
 </html>
