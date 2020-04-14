@@ -14,6 +14,7 @@
         display: flex;
         align-items: center;
         min-height: 100vh;
+        flex-direction: column-reverse;
       }
 
       #bands {
@@ -42,9 +43,11 @@
     </style>
 
     <ul id="bands"></ul>
+    <button class="sort-az">Sort A-Z</button>
 
     <script>
       const list = document.querySelector("#bands");
+      const sortButton = document.querySelector(".sort-az");
       const bands = [
         "The Plot in You",
         "The Devil Wears Prada",
@@ -64,6 +67,11 @@
       bands.forEach((band) => {
         list.innerHTML += `<li>${band}</li>`;
       });
+
+      function sortBands() {
+        console.log("works");
+      }
+      sortButton.addEventListener("click", sortBands);
     </script>
   </body>
 </html>
