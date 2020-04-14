@@ -40,14 +40,33 @@
         color: #ffc600;
         text-decoration: none;
       }
+      .buttons {
+        margin-top: 10px;
+      }
+      .button {
+        padding: 5px;
+        background-color: darkseagreen;
+        border: none;
+        margin: 0 10px;
+        transition: 0.2s ease;
+      }
+      button:hover {
+        background-color: darkslategrey;
+        color: floralwhite;
+        cursor: pointer;
+      }
     </style>
 
     <ul id="bands"></ul>
-    <button class="sort-az">Sort A-Z</button>
+    <div class="buttons">
+      <button class="button sort-az">Sort A-Z</button>
+      <button class="button sort-za">Sort A-Z</button>
+    </div>
 
     <script>
       const list = document.querySelector("#bands");
-      const sortButton = document.querySelector(".sort-az");
+      const sortButtonAZ = document.querySelector(".sort-az");
+      const sortButtonZA = document.querySelector(".sort-za");
       const bands = [
         "The Plot in You",
         "The Devil Wears Prada",
@@ -63,15 +82,28 @@
         "Anywhere But Here",
         "An Old Dog",
       ];
-
       bands.forEach((band) => {
         list.innerHTML += `<li>${band}</li>`;
       });
-
-      function sortBands() {
-        console.log("works");
+      function strip(bandName) {
+        return bandName.replace(/^(a |the |an )/i, "").trim();
       }
-      sortButton.addEventListener("click", sortBands);
+
+      function sortAZ() {
+        const sortBands = bands.sort((a, b) => (strip(a) > strip(b) ? 1 : -1));
+        document.querySelector("#bands").innerHTML = sortBands
+          .map((band) => `<li>${band}</li>`)
+          .join("");
+      }
+      function sortZA() {
+        const sortBands = bands.sort((a, b) => (strip(a) > strip(b) ? -1 : 1));
+        document.querySelector("#bands").innerHTML = sortBands
+          .map((band) => `<li>${band}</li>`)
+          .join("");
+      }
+
+      sortButtonAZ.addEventListener("click", sortAZ);
+      sortButtonZA.addEventListener("click", sortZA);
     </script>
   </body>
 </html>
